@@ -17,17 +17,14 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
-    - name: Install Dependencies
+    - name: Run Cookiecutter
+      uses: andrewthetechie/gha-cookiecutter@main
+      with:
+        # can be a link to a git repo or a local path
+        template: .
+    - name: Install Dependencies for checking code
       run: |
-        pip install cookiecutter flake8 black
-    - name: Generate Repository
-      run: |
-        cookiecutter . --no-input
-        rm -Rf omero-somethingshort/.github/workflows/
-    - name: Install Generated Repositority Dependencies
-      run: |
-        cd omero-somethingshort
-        pip install -e .[all]
+        pip install flake8 black
     - name: Check code
       run: |
         cd omero-somethingshort
